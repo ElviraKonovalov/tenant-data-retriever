@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-class Tenant(TypedDict):
+class TenantData(TypedDict):
     address: str
     email: str
     phone_number: str
