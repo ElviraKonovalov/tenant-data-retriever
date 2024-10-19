@@ -32,7 +32,7 @@ First, clone the repository and navigate to the project directory:
 
 ```
 git clone https://github.com/ElviraKonovalov/tenant-data-retriever.git  
-cd tenant-data-retriever`
+cd tenant-data-retriever
 ```
   
 Next, build the Docker image:  
