@@ -59,10 +59,20 @@ class ClickPay(TenantPortal):
         login_response = session.post(login_url, json=login_data)
 
         if not login_response.ok:
-            logging.error(f"login failed for user: {username}")
-            logging.error(f"login response: {login_response}")
+            logging.error(f"login failed for user: {username}, http status code: {login_response.status_code}")
             raise RuntimeError(f"login failed for user: {username}")
-        
+
+        try:
+            result = login_response.json().get("Result", {}).get("Result")
+            if result == "Fail":
+                logging.error(f"login failed for user: {username}, response indicates failure: {login_response.text}")
+                raise RuntimeError(f"login failed for user: {username}, server response indicates failure")
+        except ValueError as e:
+            logging.error(f"failed to parse login response json for user: {username}. error: {e}")
+            raise RuntimeError(f"login response could not be parsed as json for user: {username}")
+
+        logging.info(f"login successful for user: {username}")
+
         return login_response
 
     def get_redirection_url(self, login_response: requests.Response) -> str:
@@ -75,7 +85,7 @@ class ClickPay(TenantPortal):
 
         return f"https://www.clickpay.com/{redirection_url}"
 
-    def get_redirection_url(self, session: requests.Session, redirection_url: str) -> str:
+    def get_antiforgery_token(self, session: requests.Session, redirection_url: str) -> str:
         '''handles redirection and extracts the antiforgery token from the page'''
         redirect_response = session.get(redirection_url).text
         soup = BeautifulSoup(redirect_response, 'html.parser')
@@ -122,7 +132,8 @@ class ClickPay(TenantPortal):
             f"{street_number} {street_name} {street_type_name}, "
             f"Apt {apt_number}, {city}, {state} {zip_code}"
         )
-
+        
+        # TODO: add address validation?
         # if address.strip() == "" or address is None:
         #     logging.warning('address is empty, this might be an issue. ')
 
