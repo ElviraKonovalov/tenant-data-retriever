@@ -20,3 +20,29 @@ Modify the `TENANT_PORTAL_CLASSES` dictionary in `tenant_portal_data_retriever.p
 - `click_pay.py`: Implementation of the TenantPortal class for the ClickPay tenant portal.  
 - `tenant_database.py`: Manages database operations using SQLite.  
 - `tenant.py`: Defines the TenantData structure used for tenant information.  
+
+## Running with Docker
+You can also run the application using Docker.
+
+### Prerequisites
+Docker must be installed on your machine.  
+
+### Building the Docker Image
+First, clone the repository and navigate to the project directory:
+
+```git clone https://github.com/ElviraKonovalov/tenant-data-retriever.git  
+cd tenant-data-retriever```  
+  
+Next, build the Docker image:  
+```docker build -t tenant-portal-retriever .```  
+  
+This command will create a Docker image named tenant-portal-retriever.
+
+### Running the Docker Container
+To run the Docker container, use the following command:  
+`docker run -it tenant-portal-retriever <tenant_portal> <username> <password>`  
+  
+Replace:  
+<tenant_portal> with the name of the tenant portal (e.g., click_pay)
+<username> with your actual username
+<password> with your actual password
