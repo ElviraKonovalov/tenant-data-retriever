@@ -31,10 +31,11 @@ Docker must be installed on your machine.
 First, clone the repository and navigate to the project directory:
 
 ```git clone https://github.com/ElviraKonovalov/tenant-data-retriever.git  
-cd tenant-data-retriever```  
+cd tenant-data-retriever`
+``  
   
 Next, build the Docker image:  
-```docker build -t tenant-portal-retriever .```  
+```docker build -t tenant-portal-retriever .```
   
 This command will create a Docker image named tenant-portal-retriever.
 
