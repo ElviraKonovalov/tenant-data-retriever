@@ -45,6 +45,6 @@ To run the Docker container, use the following command:
 `docker run -it tenant-portal-retriever <tenant_portal> <username> <password>`  
   
 Replace:  
-<tenant_portal> with the name of the tenant portal (e.g., click_pay)
-<username> with your actual username
-<password> with your actual password
+`<tenant_portal>` with the name of the tenant portal (e.g., click_pay)  
+`<username>` with your actual username  
+`<password>` with your actual password  
