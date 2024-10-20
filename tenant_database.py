@@ -12,7 +12,7 @@ class DatabaseManager:
     @contextmanager
     def connect_to_db(self):
         '''
-        using contextmanager to handle connections to db efficiently
+        uses contextmanager to handle connections to db efficiently
         '''
         conn = sqlite3.connect(self.db_name)
         try:
@@ -41,7 +41,7 @@ class DatabaseManager:
                 property_management_company TEXT
                 )
             ''')
-            logging.info('created tenants table successfully')
+            logging.debug('created tenants table successfully')
 
     def save_tenant_data_to_db(self, tenant_data: TenantData) -> None:
         '''
@@ -58,4 +58,4 @@ class DatabaseManager:
                 tenant_data.get('phone_number'),
                 tenant_data.get('property_management_company')
             ))
-            logging.info('saved tenant data successfully')
+            logging.debug('saved tenant data successfully')

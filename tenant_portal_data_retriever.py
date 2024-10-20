@@ -12,7 +12,12 @@ TENANT_PORTAL_CLASSES: Dict[str, Type[TenantPortal]] = {
 }
 VALID_TENANT_PORTALS = list(TENANT_PORTAL_CLASSES.keys())
 
-def main(tenant_portal_name: str, username: str, password: str) -> None:
+def main(tenant_portal: str, username: str, password: str) -> None:
+    '''
+    this program interacts with different tenant portals, retrieves tenant data and 
+    stores the data in a local SQLite database
+    '''
+    # creates & connects to database and creates table
     try:
         db_manager = DatabaseManager('tenants_portal.db')
         logging.info("database manager initialized successfully")
@@ -22,9 +27,9 @@ def main(tenant_portal_name: str, username: str, password: str) -> None:
     
     # retrieves tenant data from the specified portal
     try:
-        tenant_portal_class: Type[TenantPortal] = TENANT_PORTAL_CLASSES.get(tenant_portal_name)
+        tenant_portal_class: Type[TenantPortal] = TENANT_PORTAL_CLASSES.get(tenant_portal)
         if tenant_portal_class is None:
-            raise ValueError(f"invalid tenant portal name: {tenant_portal_name}")
+            raise ValueError(f"invalid tenant portal name: {tenant_portal}")
 
         tenant_portal_instance: TenantPortal = tenant_portal_class()
         tenant_data = tenant_portal_instance.get_tenant_data(username, password)
@@ -45,10 +50,9 @@ def main(tenant_portal_name: str, username: str, password: str) -> None:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('tenant_portal', type=str, choices=VALID_TENANT_PORTALS, help='the name of the tenant portal. valid options: click_pay')
+    parser.add_argument('tenant_portal', type=str, choices=VALID_TENANT_PORTALS, help=f"the name of the tenant portal. valid options: {', '.join(VALID_TENANT_PORTALS)}")
     parser.add_argument('username', type=str, help='the username to log in to the tenant portal.')
     parser.add_argument('password', type=str, help='the password to log in to the tenant portal.')
     args = parser.parse_args()
 
     main(args.tenant_portal, args.username, args.password)
-    # example usage: python3 tenant_portal_data_retriever.py 'click_pay' 'email' 'password'

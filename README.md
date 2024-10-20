@@ -3,9 +3,13 @@ A python application to interact with different tenant portals, retrieve tenant 
 
 ## Usage
 To retrieve teannt data, use the following command:  
-```python3 tenant_portal_data_retriever.py <tenant_portal> <username> <password>```  
+```sh
+python3 tenant_portal_data_retriever.py <tenant_portal> <username> <password>
+```  
 Example:  
-```python3 tenant_portal_data_retriever.py 'click_pay' your_email@gmail.com your_password```  
+```sh
+python3 tenant_portal_data_retriever.py 'click_pay' 'your_email@gmail.com' 'your_password'
+```  
 
 ## Configuration
 You may need to add your tenant portals and implement new subclasses of `TenantPortal` to handle their specific logic.
@@ -30,19 +34,23 @@ Docker must be installed on your machine.
 ### Building the Docker Image
 First, clone the repository and navigate to the project directory:
 
-```
+```sh
 git clone https://github.com/ElviraKonovalov/tenant-data-retriever.git  
 cd tenant-data-retriever
 ```
   
 Next, build the Docker image:  
-```docker build -t tenant-portal-retriever .```
+```
+docker build -t tenant-portal-retriever .
+```
   
 This command will create a Docker image named tenant-portal-retriever.
 
 ### Running the Docker Container
 To run the Docker container, use the following command:  
-`docker run -it tenant-portal-retriever <tenant_portal> <username> <password>`  
+```sh
+docker run -it tenant-portal-retriever <tenant_portal> <username> <password>
+```  
   
 Replace:  
 `<tenant_portal>` with the name of the tenant portal (e.g., click_pay)  

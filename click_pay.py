@@ -10,18 +10,18 @@ class ClickPay(TenantPortal):
         '''
         extracts data directly from the clickPay portal
         '''
-        # step 1: creates a session and log in
+        # creates session and log in
         session = self.create_session()
         login_response = self.login(session, username, password)
 
-        # step 2: handles redirection and extract antiforgery token
+        # handles redirection and extracts antiforgery token
         redirection_url = self.get_redirection_url(login_response)
         antiforgery_token = self.get_antiforgery_token(session, redirection_url)
 
-        # step 3: sets the token in the session headers
+        # sets the token in the session headers
         session.headers['Antiforgerytoken'] = antiforgery_token
 
-        # step 4: access restricted data for units and profile
+        # access restricted data for units and profile
         units = self.get_user_units(session)
         profile = self.get_user_profile(session)
 
@@ -132,14 +132,11 @@ class ClickPay(TenantPortal):
             f"{street_number} {street_name} {street_type_name}, "
             f"Apt {apt_number}, {city}, {state} {zip_code}"
         )
-        
-        # TODO: add address validation?
-        # if address.strip() == "" or address is None:
-        #     logging.warning('address is empty, this might be an issue. ')
 
         return address
-
+    
     def get_mock_tenant_data(self) -> TenantData:
+        '''mock data for step 1'''
         return {
             'address': '4 Privet Drive, Little Whinging, Surrey',
             'email': 'harrypotter@gmail.com',
